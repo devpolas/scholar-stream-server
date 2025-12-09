@@ -7,36 +7,30 @@ const scholarshipsSchema = new mongoose.Schema(
       required: [true, "A scholarship must have a name!"],
       unique: true,
       trim: true,
-      maxLength: [100, "tour name at least 100 character or below"],
-      minLength: [5, "tour name at least 5 character or higher"],
+      maxLength: [100, "scholarship name at least 100 character or below"],
+      minLength: [5, "scholarship name at least 5 character or higher"],
     },
     universityName: {
       type: String,
       required: [true, "A scholarship must have a university name!"],
-      unique: true,
-      trim: true,
-      maxLength: [100, "tour name at least 100 character or below"],
-      minLength: [5, "tour name at least 5 character or higher"],
+      maxLength: [100, "university name at least 100 character or below"],
+      minLength: [5, "university name at least 5 character or higher"],
     },
     universityImage: {
       type: String,
-      require: [true, "Please give a awesome cover image for scholarship!"],
+      required: [true, "Please give a awesome cover image for scholarship!"],
     },
     universityCountry: {
       type: String,
       required: [true, "University must have a university Country!"],
-      unique: true,
-      trim: true,
-      maxLength: [100, "tour name at least 100 character or below"],
-      minLength: [5, "tour name at least 5 character or higher"],
+      maxLength: [100, "Country name at least 100 character or below"],
+      minLength: [5, "Country name at least 5 character or higher"],
     },
     universityCity: {
       type: String,
       required: [true, "University must have a university City!"],
-      unique: true,
-      trim: true,
-      maxLength: [100, "tour name at least 100 character or below"],
-      minLength: [5, "tour name at least 5 character or higher"],
+      maxLength: [100, "City name at least 100 character or below"],
+      minLength: [5, "City name at least 5 character or higher"],
     },
     universityWorldRank: {
       type: Number,
@@ -77,7 +71,7 @@ const scholarshipsSchema = new mongoose.Schema(
 
 scholarshipsSchema.virtual("reviews", {
   ref: "Review",
-  foreignField: "tour",
+  foreignField: "scholarship",
   localField: "_id",
 });
 

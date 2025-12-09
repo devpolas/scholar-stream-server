@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
       values: ["student", "moderator", "admin"],
       message: `"{VALUE}" not supported You should choose either "student", "moderator", "admin"`,
     },
+    default: "student",
   },
 });
 

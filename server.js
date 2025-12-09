@@ -8,7 +8,7 @@ const dbUser = process.env.DB_URL.replace("<USER>", process.env.DB_USER);
 const db = dbUser.replace("<PASSWORD>", process.env.DB_PASSWORD);
 
 mongoose.connect(db).then(() => {
-  console.log("Database Connect Successfully!");
+  console.log("Database Connected Successfully!");
 });
 
 const server = app.listen(port, () => {

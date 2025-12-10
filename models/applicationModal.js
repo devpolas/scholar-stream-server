@@ -14,8 +14,8 @@ const applicationSchema = new mongoose.Schema({
   applicationStatus: {
     type: String,
     enum: {
-      values: ["pending", "processing", "completed"],
-      message: `"{VALUE}" not supported You should choose either "pending", "processing", "completed"`,
+      values: ["pending", "processing", "completed", "rejected"],
+      message: `"{VALUE}" not supported You should choose either "pending", "processing", "completed", "rejected"`,
     },
     default: "pending",
   },

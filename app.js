@@ -58,4 +58,12 @@ app.use("/api/v1/scholarships", scholarshipRouter);
 app.use("/api/v1/applications", applicationRouter);
 app.use("/api/v1/reviews", reviewRouter);
 
+// handel unrecognized routes
+app.all("/*splat", (req, res) => {
+  res.status(404).json({
+    status: "fail",
+    message: `can't find ${req.originalUrl} on this server`,
+  });
+});
+
 module.exports = app;

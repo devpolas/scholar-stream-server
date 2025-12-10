@@ -1,0 +1,6 @@
+NODE_ENV = production
+PORT = 8000
+DB_URL = database_connection_string
+DB_PASSWORD = database_password
+DB_USER = database_user
+FIREBASE_SDK_KEY = firebase_sdk.json_convert_to_string_base64

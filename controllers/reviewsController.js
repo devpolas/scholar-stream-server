@@ -2,7 +2,12 @@ const catchAsync = require("./../utils/catchAsync.js");
 const Review = require("./../models/reviewsModal.js");
 
 exports.getAllReview = catchAsync(async (req, res, next) => {
-  const reviews = await Review.find();
+  let filter = {};
+
+  if (req.params.scholarshipId)
+    filter = { scholarship: req.params.scholarshipId };
+
+  const reviews = await Review.find(filter);
   if (reviews.length === 0) {
     return res.status(200).json({
       status: "success",

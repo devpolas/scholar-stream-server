@@ -4,15 +4,19 @@ const paymentHistorySchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: [true, "Payment history must have a user"],
     },
     scholarship: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Scholarship",
       required: [true, "Payment history must have a scholarship"],
     },
     transactionId: {
       type: String,
       required: [true, "Payment history must have a transaction id"],
+      unique: true,
+      trim: true,
     },
     totalAmount: {
       type: Number,

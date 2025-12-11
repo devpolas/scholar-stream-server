@@ -1,10 +1,13 @@
 const express = require("express");
 const authController = require("./../controllers/authController.js");
 const applicationController = require("./../controllers/applicationController.js");
+const paymentRouter = require("./../routes/paymentRouter.js");
 
 const router = express.Router({ mergeParams: true });
 
 router.use(authController.protect);
+
+router.use("/:applicationId/payments", paymentRouter);
 
 router
   .route("/")

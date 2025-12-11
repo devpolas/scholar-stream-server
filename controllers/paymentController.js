@@ -1,35 +1,47 @@
 require("@dotenvx/dotenvx").config();
 const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 const catchAsync = require("./../utils/catchAsync.js");
+const Application = require("./../models/applicationModal.js");
 const Scholarship = require("./../models/scholarshipsModel.js");
 const Payment = require("./../models/paymentHistory.js");
 const Application = require("./../models/applicationModal.js");
 
 exports.makePayment = catchAsync(async (req, res, next) => {
-  const user = res.user;
-  const scholarshipId = req.params.scholarshipId;
+  const user = req.user;
+  const applicationId = req.params.applicationId;
+  const application = await Application.findById(applicationId);
+  if (!application) {
+    return res.status(404).json({
+      status: "fail",
+      message: "No application found for pay!",
+    });
+  }
+
+  const scholarshipId = application.scholarship;
   const scholarship = await Scholarship.findById(scholarshipId);
+
   if (!scholarship) {
     return res.status(404).json({
       status: "fail",
-      message: "No scholarship found for pay!",
+      message: "No scholarship found, may expire this scholarship!",
     });
   }
+
   const price =
-    parseInt(
-      scholarship.applicationFees +
-        scholarship.tuitionFees +
-        scholarship.serviceCharge
-    ) * 100;
+    Number(scholarship.applicationFees) +
+    Number(scholarship.tuitionFees) +
+    Number(scholarship.serviceCharge);
+
+  const totalPrice = price * 100;
 
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
         price_data: {
-          currency: "USD",
+          currency: "usd",
+          unit_amount: totalPrice,
           product_data: {
             name: `Please Pay for ${scholarship.scholarshipName}`,
-            unit_amount: price,
           },
         },
         quantity: 1,
@@ -37,8 +49,9 @@ exports.makePayment = catchAsync(async (req, res, next) => {
     ],
     customer_email: user.email,
     metadata: {
-      scholarship,
-      user,
+      applicationId,
+      userId: user.id,
+      scholarshipId,
     },
     mode: "payment",
     success_url: `${process.env.DOMAIN_NAME}/dashboard/payment-success?session_id={CHECKOUT_SESSION_ID}`,
@@ -53,20 +66,21 @@ exports.makePayment = catchAsync(async (req, res, next) => {
 });
 
 exports.sessionStatus = catchAsync(async (req, res) => {
-  const sessionId = req.query.session_id;
+  const sessionId = req.query.sessionId;
   const session = await stripe.checkout.sessions.retrieve(sessionId);
 
   if (session.payment_status === "paid") {
     let paymentHistory;
-    const user = session.metadata.user.id;
-    const scholarship = session.metadata.scholarship.id;
+    const user = session.metadata.userId;
+    const scholarship = session.metadata.scholarshipId;
     const transactionId = session.payment_intent;
-    const totalAmount = session.total_amount;
+    const totalAmount = session.amount_total / 100;
     const currency = session.currency;
 
     const updateApplication = await Application.findOneAndUpdate(
-      { scholarship },
-      { paymentStatus: "Paid" }
+      { user, scholarship },
+      { paymentStatus: "Paid" },
+      { new: true, runValidators: true }
     );
 
     paymentHistory = await Payment.findOne({ transactionId });

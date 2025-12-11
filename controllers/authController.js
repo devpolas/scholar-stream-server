@@ -24,6 +24,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = req.headers.authorization.split(" ")[1];
   }
 
+  console.log(token);
+
   if (!token) {
     return res
       .status(401)
@@ -38,6 +40,8 @@ exports.protect = catchAsync(async (req, res, next) => {
       .status(401)
       .json({ status: "fail", message: "Invalid or expired token" });
   }
+
+  // console.log(decodeUser);
 
   const currentUser = await User.findOne({ email: decodeUser.email });
   if (!currentUser) {

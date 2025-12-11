@@ -1,11 +1,13 @@
 const express = require("express");
 const scholarshipController = require("../controllers/scholarshipsController");
 const authController = require("./../controllers/authController.js");
-const reviewRouter = require("./../routes/reviewsRouter.js");
+const reviewRouter = require("./reviewsRouter.js");
+const applicationRoute = require("./applicationRouter.js");
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.use("/:scholarshipId/reviews", reviewRouter);
+router.use("/:scholarshipId/applications", applicationRoute);
 
 router
   .route("/")

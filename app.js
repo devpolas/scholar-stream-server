@@ -53,6 +53,10 @@ app.delete("/", (req, res) => {
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+app.use((req, res, next) => {
+  console.log("Hit application router:", req.originalUrl);
+  next();
+});
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/scholarships", scholarshipRouter);

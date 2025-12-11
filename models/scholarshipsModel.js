@@ -35,8 +35,8 @@ const scholarshipsSchema = new mongoose.Schema(
     scholarshipCategory: {
       type: String,
       enum: {
-        values: ["Full-fund", "Partial", "Self-fund"],
-        message: `"{VALUE}" not supported You should choose either "Full-fund", "Partial", "Self-fund"`,
+        values: ["Full-Fund", "Partial-Fund", "Self-Fund"],
+        message: `"{VALUE}" not supported You should choose either "Full-Fund", "Partial-Fund", "Self-Fund"`,
       },
       required: [true, "Scholarship must have a scholarshipCategory"],
     },

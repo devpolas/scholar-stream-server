@@ -6,6 +6,7 @@ const scholarshipRouter = require("./routes/scholarshipsRouter.js");
 const userRouter = require("./routes/usersRouter.js");
 const reviewRouter = require("./routes/reviewsRouter.js");
 const applicationRouter = require("./routes/applicationRouter.js");
+const paymentRouter = require("./routes/paymentRouter.js");
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/scholarships", scholarshipRouter);
 app.use("/api/v1/applications", applicationRouter);
 app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/payments", paymentRouter);
 
 // handel unrecognized routes
 app.all("/*splat", (req, res) => {

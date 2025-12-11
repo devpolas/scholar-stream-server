@@ -1,4 +1,4 @@
-const app = require("./index");
+const app = require("./app.js");
 require("@dotenvx/dotenvx").config();
 const mongoose = require("mongoose");
 

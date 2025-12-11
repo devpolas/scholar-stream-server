@@ -48,11 +48,17 @@ const scholarshipsSchema = new mongoose.Schema(
       },
       required: [true, "Scholarship must have a scholarshipCategory"],
     },
-    tuitionFees: { type: Number },
-    applicationFees: { type: Number },
-    serviceCharge: { type: Number },
-    applicationDeadline: { type: Date },
-    scholarshipPostDate: { type: Date },
+    tuitionFees: { type: Number, default: 0 },
+    applicationFees: {
+      type: Number,
+      required: [true, "A Scholarship must have a price"],
+    },
+    serviceCharge: { type: Number, default: 0 },
+    scholarshipPostDate: { type: Date, default: Date.now },
+    applicationDeadline: {
+      type: Date,
+      required: [true, "A scholarship must have a deadline"],
+    },
     postedUserEmail: {
       type: String,
       required: [true, "Please tell who provide the scholarship"],

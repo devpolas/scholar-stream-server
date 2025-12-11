@@ -2,10 +2,12 @@ const express = require("express");
 const scholarshipController = require("../controllers/scholarshipsController");
 const authController = require("./../controllers/authController.js");
 const reviewRouter = require("./../routes/reviewsRouter.js");
+const paymentRouter = require("./../routes/paymentRouter.js");
 
 const router = express.Router();
 
 router.use("/:scholarshipId/reviews", reviewRouter);
+router.use("/:scholarshipId/payments", paymentRouter);
 
 router
   .route("/")

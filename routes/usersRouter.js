@@ -16,10 +16,11 @@ router
     authController.restrictTo("admin", "moderator"),
     userController.getAllUsers
   );
+  
+router.route("/me").get(authController.protect, userController.getUser)
 
 router
   .route("/:id")
-  .get(authController.protect, userController.getUsers)
   .patch(authController.protect, userController.updateUser)
   .delete(
     authController.protect,

@@ -16,6 +16,7 @@ firebaseAdmin.initializeApp({
 
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
+  let decodeUser;
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer ")
@@ -23,10 +24,11 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = req.headers.authorization.split(" ")[1];
   }
 
-  if (!token)
+  if (!token) {
     return res
       .status(401)
       .json({ status: "fail", message: "Please login first" });
+  }
 
   try {
     decodeUser = await firebaseAdmin.auth().verifyIdToken(token);
@@ -41,6 +43,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   if (!currentUser) {
     return res.status(401).json({ status: "fail", message: "User not found" });
   }
+  console.log(currentUser);
   req.user = currentUser;
   next();
 });

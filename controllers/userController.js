@@ -18,8 +18,8 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getUsers = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+exports.getUser = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
 
   if (!user) {
     return res.status(404).json({
@@ -40,6 +40,15 @@ exports.createUser = catchAsync(async (req, res, next) => {
     return res.status(400).json({
       status: "fail",
       message: "name and email are required",
+    });
+  }
+
+  const existUser = await User.findOne({ email: req.body.email });
+  if (existUser) {
+    return res.status(200).json({
+      status: "success",
+      message: "already have a user",
+      data: existUser,
     });
   }
 

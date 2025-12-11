@@ -13,7 +13,7 @@ router
   .post(userController.createUser)
   .get(
     authController.protect,
-    authController.restrictTo("admin"),
+    authController.restrictTo("admin", "moderator"),
     userController.getAllUsers
   );
 

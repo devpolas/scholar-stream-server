@@ -11,17 +11,17 @@ router.use("/:userId/applications", authController.protect, applicationRouter);
 router
   .route("/")
   .post(userController.createUser)
+  .patch(authController.protect, userController.updateUser)
   .get(
     authController.protect,
     authController.restrictTo("admin", "moderator"),
     userController.getAllUsers
   );
-  
-router.route("/me").get(authController.protect, userController.getUser)
+
+router.route("/me").get(authController.protect, userController.getUser);
 
 router
   .route("/:id")
-  .patch(authController.protect, userController.updateUser)
   .delete(
     authController.protect,
     authController.restrictTo("student", "admin"),

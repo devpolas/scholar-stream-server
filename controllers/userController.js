@@ -83,7 +83,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     });
   }
 
-  const user = await User.findByIdAndUpdate(req.params.id, filterData, {
+  const user = await User.findByIdAndUpdate(req.user._id, filterData, {
     new: true,
     runValidators: true,
   });

@@ -1,3 +1,4 @@
+require("@dotenvx/dotenvx").config();
 const firebaseAdmin = require("firebase-admin");
 const catchAsync = require("./../utils/catchAsync.js");
 const User = require("./../models/usersModel.js");

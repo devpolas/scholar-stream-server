@@ -4,7 +4,6 @@ const catchAsync = require("./../utils/catchAsync.js");
 const Application = require("./../models/applicationModal.js");
 const Scholarship = require("./../models/scholarshipsModel.js");
 const Payment = require("./../models/paymentHistory.js");
-const Application = require("./../models/applicationModal.js");
 
 exports.makePayment = catchAsync(async (req, res, next) => {
   const user = req.user;
@@ -32,7 +31,7 @@ exports.makePayment = catchAsync(async (req, res, next) => {
     Number(scholarship.tuitionFees) +
     Number(scholarship.serviceCharge);
 
-  const totalPrice = price * 100;
+  const totalPrice = Math.round(price * 100);
 
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -70,7 +69,6 @@ exports.sessionStatus = catchAsync(async (req, res) => {
   const session = await stripe.checkout.sessions.retrieve(sessionId);
 
   if (session.payment_status === "paid") {
-    let paymentHistory;
     const user = session.metadata.userId;
     const scholarship = session.metadata.scholarshipId;
     const transactionId = session.payment_intent;
@@ -83,7 +81,7 @@ exports.sessionStatus = catchAsync(async (req, res) => {
       { new: true, runValidators: true }
     );
 
-    paymentHistory = await Payment.findOne({ transactionId });
+    let paymentHistory = await Payment.findOne({ transactionId });
 
     if (!paymentHistory) {
       paymentHistory = await Payment.create({
@@ -94,15 +92,14 @@ exports.sessionStatus = catchAsync(async (req, res) => {
         currency,
       });
     }
-
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
-      message: "successfully paid your scholarship",
+      message: "successfully paid your application",
       data: { updateApplication, paymentHistory },
     });
   }
-  res.send({
-    status: session.status,
-    customer_email: session.customer_details.email,
+  res.status(200).json({
+    status: "pending",
+    message: "Payment not completed",
   });
 });

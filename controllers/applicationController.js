@@ -3,7 +3,7 @@ const Application = require("./../models/applicationModal.js");
 
 exports.createApplication = catchAsync(async (req, res, next) => {
   if (!req.body.scholarship) req.body.scholarship = req.params.id;
-  if (!req.body.user) req.body.user = req.user.id;
+  if (!req.body.user) req.body.user = req.user._id;
   const newApplication = await Application.create(req.body);
 
   res.status(201).json({

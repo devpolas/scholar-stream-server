@@ -41,7 +41,7 @@ exports.getReview = catchAsync(async (req, res, next) => {
 
 exports.createReview = catchAsync(async (req, res, next) => {
   if (!req.body.scholarship) req.body.scholarship = req.params.id;
-  if (!req.body.user) req.body.user = req.user.id;
+  if (!req.body.user) req.body.user = req.user._id;
 
   const review = await Review.create(req.body);
 

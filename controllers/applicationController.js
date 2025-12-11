@@ -2,7 +2,6 @@ const catchAsync = require("./../utils/catchAsync.js");
 const Application = require("./../models/applicationModal.js");
 
 exports.createApplication = catchAsync(async (req, res, next) => {
-  console.log(req.params.scholarshipId);
   if (!req.body.scholarship) req.body.scholarship = req.params.scholarshipId;
   if (!req.body.user) req.body.user = req.user._id;
   const newApplication = await Application.create(req.body);

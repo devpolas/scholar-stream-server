@@ -69,9 +69,9 @@ exports.sessionStatus = catchAsync(async (req, res) => {
       { paymentStatus: "Paid" }
     );
 
-    const alreadyPaymentExits = await Payment.findOne({ transactionId });
+    paymentHistory = await Payment.findOne({ transactionId });
 
-    if (!alreadyPaymentExits) {
+    if (!paymentHistory) {
       paymentHistory = await Payment.create({
         user,
         scholarship,

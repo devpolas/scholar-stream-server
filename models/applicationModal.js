@@ -39,6 +39,14 @@ const applicationSchema = new mongoose.Schema({
   },
 });
 
+applicationSchema.pre(/^find/, function () {
+  this.populate({
+    path: "user",
+  }).populate({
+    path: "scholarship",
+  });
+});
+
 const Application = mongoose.model("Application", applicationSchema);
 
 module.exports = Application;

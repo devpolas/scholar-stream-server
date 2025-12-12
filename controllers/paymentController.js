@@ -1,5 +1,6 @@
 require("@dotenvx/dotenvx").config();
 const stripe = require("stripe")(process.env.STRIPE_API_KEY);
+const mongoose = require("mongoose");
 const catchAsync = require("./../utils/catchAsync.js");
 const Application = require("./../models/applicationModal.js");
 const Scholarship = require("./../models/scholarshipsModel.js");
@@ -48,9 +49,9 @@ exports.makePayment = catchAsync(async (req, res, next) => {
     ],
     customer_email: user.email,
     metadata: {
-      applicationId,
-      userId: user.id,
-      scholarshipId,
+      applicationId: String(applicationId),
+      userId: String(user._id),
+      scholarshipId: String(scholarship._id),
     },
     mode: "payment",
     success_url: `${process.env.DOMAIN_NAME}/dashboard/payment-success?session_id={CHECKOUT_SESSION_ID}`,
@@ -69,8 +70,8 @@ exports.sessionStatus = catchAsync(async (req, res) => {
   const session = await stripe.checkout.sessions.retrieve(sessionId);
 
   if (session.payment_status === "paid") {
-    const user = session.metadata.userId;
-    const scholarship = session.metadata.scholarshipId;
+    const user = mongoose.Types.ObjectId(session.metadata.userId);
+    const scholarship = mongoose.Types.ObjectId(session.metadata.scholarshipId);
     const transactionId = session.payment_intent;
     const totalAmount = session.amount_total / 100;
     const currency = session.currency;

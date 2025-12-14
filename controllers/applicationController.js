@@ -1,5 +1,6 @@
 const catchAsync = require("./../utils/catchAsync.js");
 const Application = require("./../models/applicationModal.js");
+const { default: mongoose } = require("mongoose");
 
 exports.createApplication = catchAsync(async (req, res, next) => {
   if (!req.body.scholarship) req.body.scholarship = req.params.scholarshipId;
@@ -33,7 +34,10 @@ exports.getApplication = catchAsync(async (req, res, next) => {
 exports.getAllApplications = catchAsync(async (req, res, next) => {
   let filter = {};
 
-  if (req.params.userId) filter = { user: req.params.userId };
+  console.log(req.params.userId);
+
+  if (req.params.userId)
+    filter = { user: new mongoose.Types.ObjectId(req.params.userId) };
 
   const allApplications = await Application.find(filter);
 

@@ -43,7 +43,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   if (!currentUser) {
     return res.status(401).json({ status: "fail", message: "User not found" });
   }
-  console.log(currentUser);
   req.user = currentUser;
   next();
 });

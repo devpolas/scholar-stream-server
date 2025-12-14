@@ -30,6 +30,10 @@ const paymentHistorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+paymentHistorySchema.pre(/^find/, function () {
+  this.populate({ path: "scholarship" }).populate({ path: "user" });
+});
+
 const Payment = mongoose.model("Payment", paymentHistorySchema);
 
 module.exports = Payment;

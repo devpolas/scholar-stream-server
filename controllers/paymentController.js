@@ -66,19 +66,22 @@ exports.makePayment = catchAsync(async (req, res, next) => {
 });
 
 exports.sessionStatus = catchAsync(async (req, res) => {
-  const sessionId = req.query.sessionId;
+  const sessionId = req.params.sessionId;
+  console.log(sessionId);
   const session = await stripe.checkout.sessions.retrieve(sessionId);
 
   if (session.payment_status === "paid") {
-    const user = mongoose.Types.ObjectId(session.metadata.userId);
-    const scholarship = mongoose.Types.ObjectId(session.metadata.scholarshipId);
+    const user = new mongoose.Types.ObjectId(session.metadata.userId);
+    const scholarship = new mongoose.Types.ObjectId(
+      session.metadata.scholarshipId
+    );
     const transactionId = session.payment_intent;
     const totalAmount = session.amount_total / 100;
     const currency = session.currency;
 
     const updateApplication = await Application.findOneAndUpdate(
       { user, scholarship },
-      { paymentStatus: "Paid" },
+      { paymentStatus: "paid" },
       { new: true, runValidators: true }
     );
 

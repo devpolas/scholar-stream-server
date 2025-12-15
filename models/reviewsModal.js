@@ -30,5 +30,9 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
+reviewSchema.pre(/^find/, () => {
+  this.populate({ path: "scholarship" });
+});
+
 const Review = mongoose.model("Review", reviewSchema);
 module.exports = Review;

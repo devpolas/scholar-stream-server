@@ -4,8 +4,9 @@ const Review = require("./../models/reviewsModal.js");
 exports.getAllReview = catchAsync(async (req, res, next) => {
   let filter = {};
 
-  if (req.params.scholarshipId)
-    filter = { scholarship: req.params.scholarshipId };
+  if (req.params.scholarshipId) filter.scholarship = req.params.scholarshipId;
+
+  if (req.params.userId) filter.user = req.params.userId;
 
   const reviews = await Review.find(filter);
   if (reviews.length === 0) {

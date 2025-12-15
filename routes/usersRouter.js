@@ -2,10 +2,14 @@ const express = require("express");
 const userController = require("./../controllers/userController.js");
 const authController = require("./../controllers/authController.js");
 const applicationRouter = require("./../routes/applicationRouter.js");
+const reviewRouter = require("./../routes/reviewsRouter.js");
+const paymentRouter = require("./../routes/paymentRouter.js");
 
 const router = express.Router();
 
 router.use("/:userId/applications", authController.protect, applicationRouter);
+router.use("/:userId/reviews", authController.protect, reviewRouter);
+router.use("/:userId/payments/history", authController.protect, paymentRouter);
 
 router
   .route("/")

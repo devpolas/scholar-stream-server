@@ -107,3 +107,22 @@ exports.sessionStatus = catchAsync(async (req, res) => {
     message: "Payment not completed",
   });
 });
+
+exports.getPaymentHistory = catchAsync(async (req, res, next) => {
+  let filter = {};
+
+  if (req.params.userId) {
+    filter.user = new mongoose.Types.ObjectId(req.params.userId);
+  }
+
+  const allHistory = await Payment.find(filter);
+
+  res.status(200).json({
+    status: "success",
+    message:
+      allHistory.length === 0
+        ? "You have no payment history"
+        : "Successfully fetched payment history",
+    data: allHistory,
+  });
+});

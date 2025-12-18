@@ -19,7 +19,7 @@ router
   .get(applicationController.getApplication)
   .delete(applicationController.deleteApplication)
   .patch(
-    authController.restrictTo("admin", "moderator"),
+    authController.restrictTo("Admin", "Moderator"),
     applicationController.updateApplication
   );
 

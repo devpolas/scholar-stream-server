@@ -81,7 +81,7 @@ exports.sessionStatus = catchAsync(async (req, res) => {
 
     const updateApplication = await Application.findOneAndUpdate(
       { user, scholarship },
-      { paymentStatus: "paid" },
+      { paymentStatus: "Paid" },
       { new: true, runValidators: true }
     );
 

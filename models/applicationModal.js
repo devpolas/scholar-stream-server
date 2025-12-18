@@ -14,18 +14,18 @@ const applicationSchema = new mongoose.Schema({
   applicationStatus: {
     type: String,
     enum: {
-      values: ["pending", "processing", "completed", "rejected"],
-      message: `"{VALUE}" not supported You should choose either "pending", "processing", "completed", "rejected"`,
+      values: ["Pending", "Processing", "Completed", "Rejected"],
+      message: `"{VALUE}" not supported You should choose either "Pending", "Processing", "Completed", "Rejected"`,
     },
     default: "pending",
   },
   paymentStatus: {
     type: String,
     enum: {
-      values: ["unpaid", "paid"],
+      values: ["Unpaid", "Paid"],
       message: `"{VALUE}" not supported You should choose either "unpaid", "paid"`,
     },
-    default: "unpaid",
+    default: "Unpaid",
   },
   applicationDate: {
     type: Date,

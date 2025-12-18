@@ -11,10 +11,10 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: {
-      values: ["student", "moderator", "admin"],
-      message: `"{VALUE}" not supported You should choose either "student", "moderator", "admin"`,
+      values: ["Student", "Moderator", "Admin"],
+      message: `"{VALUE}" not supported You should choose either "Student", "Moderator", "Admin"`,
     },
-    default: "student",
+    default: "Student",
   },
 });
 

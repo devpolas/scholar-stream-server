@@ -14,7 +14,7 @@ router
   .get(scholarshipController.getAllScholarships)
   .post(
     authController.protect,
-    authController.restrictTo("admin"),
+    authController.restrictTo("Admin"),
     scholarshipController.addScholarship
   );
 
@@ -23,12 +23,12 @@ router
   .get(scholarshipController.getScholarship)
   .patch(
     authController.protect,
-    authController.restrictTo("admin"),
+    authController.restrictTo("Admin"),
     scholarshipController.updateScholarship
   )
   .delete(
     authController.protect,
-    authController.restrictTo("admin"),
+    authController.restrictTo("Admin"),
     scholarshipController.deleteScholarship
   );
 

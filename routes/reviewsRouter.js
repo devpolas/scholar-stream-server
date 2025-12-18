@@ -9,7 +9,7 @@ router
   .get(reviewController.getAllReview)
   .post(
     authController.protect,
-    authController.restrictTo("student"),
+    authController.restrictTo("Student"),
     reviewController.createReview
   );
 
@@ -18,12 +18,12 @@ router
   .get(reviewController.getReview)
   .patch(
     authController.protect,
-    authController.restrictTo("student", "admin", "moderator"),
+    authController.restrictTo("Student", "Admin", "Moderator"),
     reviewController.updateReview
   )
   .delete(
     authController.protect,
-    authController.restrictTo("student", "admin", "moderator"),
+    authController.restrictTo("Student", "Admin", "Moderator"),
     reviewController.deleteReview
   );
 

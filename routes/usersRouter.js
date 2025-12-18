@@ -17,7 +17,7 @@ router
   .patch(authController.protect, userController.updateUser)
   .get(
     authController.protect,
-    authController.restrictTo("admin", "moderator"),
+    authController.restrictTo("Admin", "Moderator"),
     userController.getAllUsers
   );
 
@@ -27,12 +27,12 @@ router
   .route("/:id")
   .delete(
     authController.protect,
-    authController.restrictTo("student", "admin"),
+    authController.restrictTo("Student", "Admin"),
     userController.deleteUser
   );
 
 router
   .route("/update-role/:id")
-  .patch(authController.restrictTo("admin"), userController.updateUserRole);
+  .patch(authController.restrictTo("Admin"), userController.updateUserRole);
 
 module.exports = router;

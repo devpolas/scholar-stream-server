@@ -56,6 +56,12 @@ Route Description
 /api/v1/payments Stripe payment handling
 ```
 
+## Features
+
+```
+GET /api/v1/scholarships?search=Masters&universityCountry=USA&subjectCategory=Engineering&sort=-applicationFees&page=2&limit=5
+```
+
 ## 🧭 Routing Flow
 
 ```

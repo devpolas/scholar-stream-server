@@ -9,9 +9,6 @@ const router = express.Router({ mergeParams: true });
 router.use("/:scholarshipId/reviews", reviewRouter);
 router.use("/:scholarshipId/applications", applicationRoute);
 
-// Search & filter scholarships (no auth required, public)
-router.get("/search", scholarshipController.getScholarshipsBySearch);
-
 router
   .route("/")
   .get(scholarshipController.getAllScholarships)

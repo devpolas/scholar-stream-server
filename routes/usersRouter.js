@@ -33,6 +33,10 @@ router
 
 router
   .route("/update-role/:id")
-  .patch(authController.restrictTo("Admin"), userController.updateUserRole);
+  .patch(
+    authController.protect,
+    authController.restrictTo("Admin"),
+    userController.updateUserRole
+  );
 
 module.exports = router;

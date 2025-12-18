@@ -17,7 +17,7 @@ const applicationSchema = new mongoose.Schema({
       values: ["Pending", "Processing", "Completed", "Rejected"],
       message: `"{VALUE}" not supported You should choose either "Pending", "Processing", "Completed", "Rejected"`,
     },
-    default: "pending",
+    default: "Pending",
   },
   paymentStatus: {
     type: String,

@@ -38,12 +38,12 @@ exports.getAllScholarships = catchAsync(async (req, res, next) => {
     const sortBy = sort.split(",").join(" ");
     query = query.sort(sortBy);
   } else {
-    query = query.sort("-scholarshipPostDate"); // default latest first
+    query = query.sort("-scholarshipPostDate");
   }
 
   // Pagination
-  const pageNumber = parseInt(page, 10);
-  const limitNumber = parseInt(limit, 10);
+  const pageNumber = parseInt(page, 10) || 1;
+  const limitNumber = parseInt(limit, 10) || 10;
   const skip = (pageNumber - 1) * limitNumber;
 
   query = query.skip(skip).limit(limitNumber);

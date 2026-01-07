@@ -86,6 +86,8 @@ Authentication
 Role-based authorization
 
 Business logic delegation to controllers
+
+stripe payment gatewat
 ```
 
 ## 🔍 Request Logging
